@@ -1,0 +1,139 @@
+[
+    {
+        "associated_countries": [
+            "FR",
+            "HR",
+            "DE",
+            "PT"
+        ],
+        "inputs": {
+            "username": {
+                "id": "register-form_pc_input_0",
+                "type": "text",
+                "move_to": true
+            },
+            "email": {
+                "id": "email",
+                "type": "text",
+                "move_to": true
+            },
+            "password": {
+                "id": "register-form_pc_input_1",
+                "type": "text",
+                "move_to": true
+            },
+            "confirm_password": {
+                "id": "register-form_pc_input_2",
+                "type": "text",
+                "move_to": true
+            },
+            "birth_year": {
+                "id": "birth-year-field",
+                "type": "select",
+                "move_to": true
+            },
+            "birth_month": {
+                "id": "birth-month-field",
+                "type": "select",
+                "move_to": true
+            },
+            "birth_day": {
+                "id": "birth-day-field",
+                "type": "select",
+                "move_to": true
+            },
+            "gender": {
+                "id": "register-form_pc_select_0",
+                "type": "select",
+                "move_to": true
+            },
+            "country": {
+                "id": "country-field",
+                "type": "select",
+                "move_to": true
+            },
+            "terms_consented": {
+                "id": "form-terms_consented",
+                "type": "wrapped-check",
+                "move_to": false,
+                "parent_tag": "div",
+                "parent_identifier_type": "class",
+                "parent_identifier": "c-checkbox"
+            },
+            "policy_consented": {
+                "id": "form-policy_consented",
+                "type": "wrapped-check",
+                "move_to": false,
+                "parent_tag": "div",
+                "parent_identifier_type": "class",
+                "parent_identifier": "c-checkbox"
+            },
+            "submit": {
+                "id": "register-form_pc_button_5",
+                "type": "submit",
+                "move_to": true
+            }
+        }
+    },
+    {
+        "associated_countries": [
+            "US"
+        ],
+        "inputs": {
+            "username": {
+                "id": "register-form_pc_input_0",
+                "type": "text"
+            },
+            "email": {
+                "id": "email",
+                "type": "text"
+            },
+            "password": {
+                "id": "register-form_pc_input_1",
+                "type": "text"
+            },
+            "confirm_password": {
+                "id": "register-form_pc_input_2",
+                "type": "text"
+            },
+            "birth_year": {
+                "id": "birth-year-field",
+                "type": "select"
+            },
+            "birth_month": {
+                "id": "birth-month-field",
+                "type": "select"
+            },
+            "birth_day": {
+                "id": "birth-day-field",
+                "type": "select"
+            },
+            "gender": {
+                "id": "register-form_pc_select_0",
+                "type": "select"
+            },
+            "country": {
+                "id": "country-field",
+                "type": "select"
+            },
+            "terms_consented": {
+                "id": "form-terms_consented",
+                "type": "wrapped-check",
+                "parent_tag": "div",
+                "parent_identifier_type": "class",
+                "parent_identifier": "c-checkbox"
+            },
+            "policy_consented": {
+                "id": "form-policy_consented",
+                "type": "wrapped-check",
+                "parent_tag": "div",
+                "parent_identifier_type": "class",
+                "parent_identifier": "c-checkbox"
+            },
+            "submit": {
+                "id": "register-form_pc_button_4",
+                "type": "submit"
+            }
+        }
+    }
+]

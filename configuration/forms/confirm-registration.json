@@ -1,0 +1,10 @@
+[
+  {
+    "inputs": {
+      "email_opted_in_unreceive": {
+        "id": "email_opted_in_unreceive",
+        "type": "checkbox"
+      }
+    }
+  }
+]

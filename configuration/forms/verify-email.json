@@ -1,0 +1,14 @@
+[
+  {
+    "inputs": {
+      "verification_code": {
+        "id": "register-pincode-form_pc_input_0",
+        "type": "text"
+      },
+      "submit": {
+        "id": "register-pincode-form_pc_button_0",
+        "type": "submit"
+      }
+    }
+  }
+]

@@ -1,0 +1,30 @@
+# Configuration file for application settings
+
+# Settings related to username generation
+USERNAME:
+  LENGTH: 10
+  MINIMUM_LETTERS: 4
+  MINIMUM_DIGITS: 4
+
+# List of forbidden email domains (emails from these domains will be excluded)
+FORBIDDEN_DOMAINS:
+  - "1secmail.com"
+  - "1secmail.org"
+  - "1secmail.net"
+
+# Password generation settings
+PASSWORD_LENGTH: 20
+
+# Birthdate range settings
+BIRTHDATE:
+  LOWER: '2000-01-01'
+  UPPER: '2005-12-31'
+
+# Maximum number of workers for concurrent tasks
+MAXIMUM_WORKERS: 16
+
+# ?
+PROXY_API_KEY: 9wb2fdr7trc01kvla5ydb8oyqgudztdtc9ogjpiz
+
+# ?
+TIMEOUT: 60
