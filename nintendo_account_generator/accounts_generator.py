@@ -1,12 +1,8 @@
 from json import load
-from random import randint, choice
 from time import time, sleep
 from typing import Tuple
 
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.webdriver import WebDriver
-from seleniumwire import webdriver
+import seleniumwire.undetected_chromedriver as uc
 
 from nintendo_account_generator.email_manager import EmailManager
 from nintendo_account_generator.form_submitter import FormSubmitter
@@ -16,7 +12,6 @@ from nintendo_account_generator.utils import generate_username, generate_passwor
 
 class AccountsGenerator:
 
-    CHROME_DRIVER_PATH = './configuration/drivers/chromedriver.exe'
     NINTENDO_ACCOUNT_REGISTRATION_URL = 'https://accounts.nintendo.com/register'
 
     REGISTER_FORM_PATH = './configuration/forms/register.json'
@@ -47,67 +42,41 @@ class AccountsGenerator:
         country, driver = self._get_driver()
         driver.get(AccountsGenerator.NINTENDO_ACCOUNT_REGISTRATION_URL)
 
-        sleep(1000)
-
         self._set_submitters(country)
 
         account = self._register(driver)
+        sleep(1000)
         self._confirm_registration(driver)
         self._verify_email(driver, account.get('email'))
 
         return account
 
-    def _get_driver(self) -> Tuple[str, webdriver.Chrome]:
-        service = Service(AccountsGenerator.CHROME_DRIVER_PATH)
-        options = Options()
+    def _get_driver(self) -> Tuple[str, uc.Chrome]:
+        options = uc.ChromeOptions()
 
-        options.add_argument('--disable-blink-features=AutomationControlled')
-        options.add_experimental_option('excludeSwitches', ['enable-automation'])
-        options.add_argument('start-maximized')  # Maximize the window to mimic human behavior
-        options.add_argument('--disable-gpu')
-        #options.add_argument('--headless')
+        # options.add_argument("--headless")
+        # options.add_argument("--no-sandbox")
+        # options.add_argument("--disable-dev-shm-usage")
+        # options.add_argument("start-maximized")
+        # options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--ignore-certificate-errors")
+        # options.add_argument("--incognito")
 
-        user_agents = [
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
-        ]
-        user_agent = choice(user_agents)
-        options.add_argument(f'--user-agent={user_agent}')
-        country = 'FR'
-        driver = webdriver.Chrome(service=service, options=options)
-
-        # Proxy rotation setup (if using proxy rotation)
         if self._proxy_rotator:
             country, proxy = self._proxy_rotator.get_next_proxy()
+            proxy_server = f'{proxy.get('address')}:{proxy.get('port')}'
 
-            proxy_server = f'{proxy.get("address")}:{proxy.get("port")}'
-            options.add_argument(f'--proxy-server={proxy_server}')
-
-            selenium_wire_options = {
+            proxy_options = {
                 'proxy': {
-                    'http': f'http://{proxy.get("username")}:{proxy.get("password")}@{proxy_server}',
-                    'https': f'http://{proxy.get("username")}:{proxy.get("password")}@{proxy_server}',
+                    'http': f'http://{proxy.get('username')}:{proxy.get('password')}@{proxy_server}',
+                    'https': f'http://{proxy.get('username')}:{proxy.get('password')}@{proxy_server}',
                     'no_proxy': 'localhost,127.0.0.1',
                 }
             }
 
-            driver = webdriver.Chrome(seleniumwire_options=selenium_wire_options, service=service,
-                                             options=options)
+            return country, uc.Chrome(options=options, seleniumwire_options=proxy_options)
 
-        # For standard driver setup (no proxy)
-
-        # Randomize the window size
-        width = randint(800, 1200)
-        height = randint(600, 800)
-        driver.set_window_size(width, height)
-
-        # Faking navigator.webdriver property
-        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-
-        # Returning country and driver object
-        return country, driver
+        return 'FR', uc.Chrome(options=options)
 
     def _set_submitters(self, country: str) -> None:
         self._register_submitter = self._get_submitter(country, AccountsGenerator.REGISTER_FORM_PATH)
